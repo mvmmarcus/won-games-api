@@ -8,12 +8,15 @@
 module.exports = {
   populate: async (ctx) => {
     console.log("Starting to populate...");
-    console.log("params: ", ctx.query);
 
-    await strapi.services.game.populate(ctx.query);
+    const options = {
+      sort: "popularity",
+      page: "1",
+      ...ctx.query,
+    };
 
-    ctx.send({ ok: true });
+    await strapi.services.game.populate(options);
 
-    console.log("Finished populating");
+    ctx.send("Finished populating");
   },
 };
